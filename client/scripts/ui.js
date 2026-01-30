@@ -137,6 +137,9 @@ class PeerUI {
 
     _icon() {
         const device = this._peer.name.device || this._peer.name;
+        if (this._peer.name.isHarmony) {
+            return '#circle-h';
+        }
         if (device.type === 'mobile') {
             return '#phone-iphone';
         }

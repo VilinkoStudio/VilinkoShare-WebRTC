@@ -245,7 +245,8 @@ class VilinkoStudioPeer {
             browser: ua.browser.name,
             type: ua.device.type,
             deviceName,
-            displayName
+            displayName,
+            isHarmony: req.headers['user-agent'].toLowerCase().includes('harmony')
         };
     }
 
