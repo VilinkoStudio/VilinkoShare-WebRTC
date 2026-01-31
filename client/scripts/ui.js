@@ -614,28 +614,27 @@ Events.on('load', () => {
     }
 
     let step = 0;
+    let animationId = null;
 
     function drawCircles() {
         ctx.clearRect(0, 0, w, h);
         for (let i = 0; i < 8; i++) {
             drawCircle(dw * i + step % dw);
         }
-        step += 1;
+        step += 0.8;
     }
 
     let loading = true;
 
     function animate() {
-        if (loading || step % dw < dw - 5) {
-            requestAnimationFrame(function() {
-                drawCircles();
-                animate();
-            });
-        }
+        drawCircles();
+        animationId = requestAnimationFrame(animate);
     }
     window.animateBackground = function(l) {
         loading = l;
-        animate();
+        if (!animationId) {
+            animate();
+        }
     };
     init();
     animate();

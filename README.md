@@ -1,5 +1,7 @@
 # 部署文档
+
 ## 环境要求
+
 - Node.js >= 14
 - npm 或 pnpm
 - Nginx >= 1.18
@@ -7,6 +9,7 @@
 
 > [!WARNING]  
 > 原项目为 Snapdrop ，本项目在后端未做大面积更改。前端修复了多端适配和在鸿蒙设备上的兼容性问题，服务端添加了更多检查点。
+
 
 ## 本地开发
 
@@ -53,6 +56,7 @@ server {
 ```
 
 ### SSL 证书
+
 将证书文件放入 `docker/certs/` 目录，修改 `docker/nginx/default.conf`:
 ```nginx
 ssl_certificate /etc/ssl/certs/your-cert.crt;
@@ -70,6 +74,7 @@ docker-compose logs nginx
 ```
 
 ## 生产环境部署
+
 ### 1. 上传代码
 
 ```bash
@@ -160,6 +165,7 @@ pm2 delete vilinko-share
 ```
 
 ### 5. 启动服务（Systemd）
+
 创建 `/etc/systemd/system/vilinko-share.service`:
 
 ```ini
@@ -200,6 +206,7 @@ sudo journalctl -u vilinko-share -f
 ```
 
 ## 配置项
+
 ### WebSocket 端口
 
 编辑 `server/index.js`，修改构造函数参数：
@@ -215,7 +222,7 @@ constructor(port) {
 
 ```bash
 node index.js 3000
-```
+````
 
 ### 设备名称生成
 
@@ -238,7 +245,8 @@ const displayName = uniqueNamesGenerator({
 - `names` - 名字
 
 ## 故障排查
-### 1. WebSocket 连接失败
+
+### WebSocket 连接失败
 
 检查服务器状态：
 
@@ -263,7 +271,7 @@ sudo ufw allow 80
 sudo ufw allow 443
 ```
 
-### 2. 文件传输失败
+### 文件传输失败
 
 检查浏览器控制台，确认 WebRTC 支持：
 
@@ -273,7 +281,7 @@ console.log('WebRTC supported:', !!window.RTCPeerConnection);
 
 检查网络连接，需要 STUN/TURN 服务器用于 NAT 穿透。
 
-### 3. PWA 安装失败
+### PWA 安装失败
 
 确认 HTTPS 已启用（localhost 除外）。
 
@@ -290,7 +298,8 @@ navigator.serviceWorker.getRegistrations().then(console.log);
 ```
 
 ## 安全配置
-### 1. 防火墙
+
+### 防火墙
 
 ```bash
 sudo ufw default deny incoming
@@ -302,7 +311,7 @@ sudo ufw allow 443
 sudo ufw enable
 ```
 
-### 2. SSL 证书
+### SSL 证书（Let's Encrypt）
 
 ```bash
 sudo apt install certbot python3-certbot-nginx
@@ -322,7 +331,7 @@ sudo crontab -e
 0 0 * * * certbot renew --quiet
 ```
 
-### 3. Nginx 安全配置
+### Nginx 安全配置
 
 在 `server` 块中添加：
 
@@ -335,14 +344,15 @@ add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsaf
 ```
 
 ## 监控
-### 1. PM2 监控
+
+### PM2 监控
 
 ```bash
-pm2 monitor
+pm2 monit
 pm2 plus
 ```
 
-### 2. 日志轮转
+### 日志轮转
 
 创建 `/etc/logrotate.d/vilinko-share`:
 
@@ -358,6 +368,7 @@ pm2 plus
 ```
 
 ## 性能优化
+
 ### Node.js 优化
 
 启动时添加参数：
