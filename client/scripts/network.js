@@ -434,13 +434,13 @@ class RTCPeer extends Peer {
     _send(message) {
         if (!this._channel) {
             console.error('RTC: channel not ready, attempting refresh (通道未就绪，尝试刷新)');
-            Events.fire('notify-user', '通道未就绪，请尝试刷新');
+            Events.fire('notify-user', '通道未就绪，请尝试刷新（双端刷新）');
             this.refresh();
             return;
         }
         if (this._channel.readyState !== 'open') {
             console.error('RTC: channel not open, state (通道未打开, 状态):', this._channel.readyState, 'attempting refresh (尝试刷新)');
-            Events.fire('notify-user', '通道未就绪，请尝试刷新');
+            Events.fire('notify-user', '通道未就绪，请尝试刷新（双端刷新）');
             this.refresh();
             return;
         }
