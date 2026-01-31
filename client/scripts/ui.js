@@ -687,3 +687,24 @@ if (refreshBtn) {
         }
     });
 }
+
+const scanToggle = document.getElementById('scanToggle');
+let scanClosed = false;
+if (scanToggle) {
+    scanToggle.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (!scanClosed) {
+            scanClosed = true;
+            Events.fire('notify-user', '扫描已被手动关闭');
+            const $peers = $$('x-peers');
+            if ($peers) {
+                $peers.innerHTML = '';
+            }
+            scanToggle.style.color = '#b3b3b3';
+        } else {
+            window.location.reload(true);
+        }
+    });
+}
