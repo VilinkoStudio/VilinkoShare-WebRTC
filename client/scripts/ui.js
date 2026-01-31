@@ -687,3 +687,15 @@ if (refreshBtn) {
         }
     });
 }
+
+const aboutLogo = document.getElementById('aboutLogo');
+if (aboutLogo) {
+    aboutLogo.addEventListener('click', e => {
+        e.preventDefault();
+        aboutLogo.style.transition = 'transform 0.3s ease-in-out';
+        aboutLogo.style.transform = 'scale(1.5)';
+        setTimeout(() => {
+            aboutLogo.style.transform = 'scale(1)';
+        }, 300);
+    });
+}
